@@ -1,0 +1,4 @@
+.idea/
+*.pyc
+rl_gym_maze.egg-info/
+env/maze_envs/maze_samples/
