@@ -1,7 +1,7 @@
 import gym
 from gym import error, spaces, utils
 from gym.utils import seeding
-from env.maze_envs.maze_view import MazeView2D
+from gym_maze.maze_envs.maze_view import MazeView2D
 
 import numpy as np
 
@@ -11,7 +11,7 @@ class MazeEnv(gym.Env):
         "render.modes": ["human", "rgb_array"],
     }
 
-    ACTION = ["N", "S", "E", "W"]
+    ACTION = ["N", "E", "S", "W"]
 
     def __init__(self, maze_file=None, maze_size=None, mode=None, enable_render=True):
 
@@ -72,15 +72,20 @@ class MazeEnv(gym.Env):
 
     def step(self, action):
         if isinstance(action, int):
+            # move_robot更新机器人位置
             self.maze_view.move_robot(self.ACTION[action])
         else:
             self.maze_view.move_robot(action)
 
+        # 回报函数，达到目标r=5，否则r=-0.1 + |x - g_x| + |y - g_y|
         if np.array_equal(self.maze_view.robot, self.maze_view.goal):
-            reward = 1
+            reward = 5.0
             done = True
         else:
-            reward = -0.1 / (self.maze_size[0] * self.maze_size[1])
+            # penalty and manhattan distance
+            # reward = -0.1 / (self.maze_size[0] * self.maze_size[1]) + \
+            #          (1.0 - np.sum(np.abs(self.maze_view.goal - self.maze_view.robot)) / np.sum(self.maze_view.goal))
+            reward = -0.1 + (1.0 - np.sum(np.abs(self.maze_view.goal - self.maze_view.robot)) / np.sum(self.maze_view.goal))
             done = False
 
         self.state = self.maze_view.robot

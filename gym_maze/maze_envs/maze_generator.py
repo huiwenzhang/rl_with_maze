@@ -1,5 +1,5 @@
 import os
-from env.maze_envs.maze_view import Maze
+from gym_maze.maze_envs.maze_view import Maze
 
 if __name__ == "__main__":
 

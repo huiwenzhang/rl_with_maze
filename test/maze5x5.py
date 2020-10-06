@@ -1,7 +1,7 @@
 import gym
-import env.maze_envs
+import gym_maze
 
-task = 'maze-random-5x5-v0'
+task = 'MazeSample5x5-v0'
 MAX_STEPS = 5000
 
 if __name__ == "__main__":

@@ -24,6 +24,8 @@ class MazeView2D:
             if not os.path.exists(maze_file_path):
                 dir_path = os.path.dirname(os.path.abspath(__file__))
                 rel_path = os.path.join(dir_path, "maze_samples", maze_file_path)
+                print(rel_path)
+
                 if os.path.exists(rel_path):
                     maze_file_path = rel_path
                 else:
